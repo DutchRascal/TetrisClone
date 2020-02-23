@@ -9,6 +9,7 @@ public class Board : MonoBehaviour
     //public int m_height = 30;
     public int m_height = 10;
     public int m_width = 10;
+    public int m_header = 8;
 
     private void Start()
     {
@@ -16,13 +17,22 @@ public class Board : MonoBehaviour
     }
     void DrawEmptyCells()
     {
-        for (int x = 0; x < m_width; x++)
+        if (m_emptySprite)
         {
-            for (int y = 0; y < m_height; y++)
+            for (int y = 0; y < m_height - m_header; y++)
             {
-                Vector3 position = new Vector3(x - 3.5f, y - 10.4f, 0);
-                Instantiate(m_emptySprite, position, Quaternion.Euler(0, 0, 0));
+                for (int x = 0; x < m_width; x++)
+                {
+                    Transform clone;
+                    clone = Instantiate(m_emptySprite, new Vector3(x + 0.1f, y + 0.1f, 0), Quaternion.identity) as Transform;
+                    clone.name = "Board Space ( x = " + x.ToString() + " , y = " + y.ToString() + ")";
+                    clone.transform.parent = transform;
+                }
             }
+        }
+        else
+        {
+            Debug.LogWarning("BOARD DrawEmptyCell: emptyString not defined!");
         }
     }
 }

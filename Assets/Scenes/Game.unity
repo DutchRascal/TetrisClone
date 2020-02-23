@@ -198,7 +198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: 4.5, y: 12, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -235,8 +235,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_emptySprite: {fileID: 3610784218171549847, guid: a5aac7acd07c94f67a274632d16e4573,
     type: 3}
-  m_height: 20
+  m_height: 30
   m_width: 10
+  m_header: 8
 --- !u!4 &557810843
 Transform:
   m_ObjectHideFlags: 0
