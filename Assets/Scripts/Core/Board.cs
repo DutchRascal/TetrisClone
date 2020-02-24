@@ -31,7 +31,8 @@ public class Board : MonoBehaviour
                 for (int x = 0; x < m_width; x++)
                 {
                     Transform clone;
-                    clone = Instantiate(m_emptySprite, new Vector3(x + 0.1f, y + 0.1f, 0), Quaternion.identity) as Transform;
+                    //clone = Instantiate(m_emptySprite, new Vector3(x + 0.1f, y + 0.1f, 0), Quaternion.identity) as Transform;
+                    clone = Instantiate(m_emptySprite, new Vector3(x, y, 0), Quaternion.identity) as Transform;
                     clone.name = "Board Space ( x = " + x.ToString() + " , y = " + y.ToString() + ")";
                     clone.transform.parent = transform;
                 }
