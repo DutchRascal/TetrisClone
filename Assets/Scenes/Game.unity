@@ -633,6 +633,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb371742ea99c4e99b9872f01d712422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_allShapes:
+  - {fileID: 8927368220508695372, guid: 9e4293c83064d4e28885bbb2671da539, type: 3}
+  - {fileID: 5519967499559415570, guid: 961d0b0161bdf4cc7824f55b1df744fe, type: 3}
+  - {fileID: 662025255855801007, guid: 3f17c7e03e2834a3ab2ce12b1f67babf, type: 3}
+  - {fileID: 4419727077498654685, guid: 55347998e25774e5e8e310a95fcec9ce, type: 3}
+  - {fileID: 9186384014029304463, guid: 1b052275ff67b44f3bdd3c01f068b79d, type: 3}
+  - {fileID: 2629524365727221563, guid: 469aefbd9ac53449b8b0ae1397531269, type: 3}
+  - {fileID: 2299543106420449374, guid: d41d790cbb5cf45f6952453bc52984b1, type: 3}
 --- !u!4 &709801698
 Transform:
   m_ObjectHideFlags: 0
@@ -641,7 +649,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 709801696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.107397, y: 0.03438937, z: -0.6152344}
+  m_LocalPosition: {x: 4, y: 25, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
