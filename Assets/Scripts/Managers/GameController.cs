@@ -7,6 +7,9 @@ public class GameController : MonoBehaviour
     Board m_gameBoard;
     Spawner m_spawner;
     Shape m_activeShape;
+    float
+        m_dropInterval = 1f,
+        m_timeToDrop;
 
     // Start is called before the first frame update
     void Start()
@@ -40,9 +43,13 @@ public class GameController : MonoBehaviour
         {
             return;
         }
-        if (m_activeShape)
+        if (Time.time > m_timeToDrop)
         {
-            m_activeShape.MoveDown();
+            m_timeToDrop = Time.time + m_dropInterval;
+            if (m_activeShape)
+            {
+                m_activeShape.MoveDown();
+            }
         }
     }
 }
