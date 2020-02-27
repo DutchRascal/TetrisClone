@@ -22,6 +22,7 @@ public class Board : MonoBehaviour
     {
         DrawEmptyCells();
     }
+
     void DrawEmptyCells()
     {
         if (m_emptySprite)
@@ -42,5 +43,23 @@ public class Board : MonoBehaviour
         {
             Debug.LogWarning("BOARD DrawEmptyCell: emptyString not defined!");
         }
+    }
+
+    public bool IsWithinBoard(int x, int y)
+    {
+        return (x >= 0 && x < m_width && y >= 0);
+    }
+
+    public bool IsValidPosition(Shape shape)
+    {
+        foreach (Transform child in shape.transform)
+        {
+            Vector2 pos = Vectorf.Round(child.position);
+            if (!IsWithinBoard((int)pos.x, (int)pos.y))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
