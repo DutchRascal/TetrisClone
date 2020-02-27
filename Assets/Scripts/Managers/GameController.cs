@@ -10,11 +10,16 @@ public class GameController : MonoBehaviour
     float
         m_dropInterval = 0.1f,
         //m_dropInterval = 1f,
-        m_timeToDrop;
+        m_timeToDrop,
+        m_timeToNextKey;
+
+    [Range(0.02f, 1f)]
+    public float m_keyRepeatRate = 0.25f;
 
     // Start is called before the first frame update
     void Start()
     {
+        m_timeToNextKey = Time.time;
         m_gameBoard = GameObject.FindObjectOfType<Board>();
         m_spawner = GameObject.FindObjectOfType<Spawner>();
 
@@ -40,6 +45,20 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButton("MoveRight") && (Time.time > m_timeToNextKey) || Input.GetButtonDown("MoveRight"))
+        {
+            m_activeShape.MoveRight();
+            m_timeToNextKey = Time.time + m_keyRepeatRate;
+            if (m_gameBoard.IsValidPosition(m_activeShape))
+            {
+                Debug.Log("Move right");
+            }
+            else
+            {
+                m_activeShape.MoveLeft();
+                Debug.Log("Hit the right boundary");
+            }
+        }
         if (!m_gameBoard || !m_spawner)
         {
             return;
