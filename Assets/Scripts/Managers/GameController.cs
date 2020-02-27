@@ -45,20 +45,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("MoveRight") && (Time.time > m_timeToNextKey) || Input.GetButtonDown("MoveRight"))
-        {
-            m_activeShape.MoveRight();
-            m_timeToNextKey = Time.time + m_keyRepeatRate;
-            if (m_gameBoard.IsValidPosition(m_activeShape))
-            {
-                Debug.Log("Move right");
-            }
-            else
-            {
-                m_activeShape.MoveLeft();
-                Debug.Log("Hit the right boundary");
-            }
-        }
+        PlayerInput();
+        Spawn();
+    }
+
+    private void Spawn()
+    {
         if (!m_gameBoard || !m_spawner)
         {
             return;
@@ -78,6 +70,24 @@ public class GameController : MonoBehaviour
                         m_activeShape = m_spawner.SpawnShape();
                     }
                 }
+            }
+        }
+    }
+
+    private void PlayerInput()
+    {
+        if (Input.GetButton("MoveRight") && (Time.time > m_timeToNextKey) || Input.GetButtonDown("MoveRight"))
+        {
+            m_activeShape.MoveRight();
+            m_timeToNextKey = Time.time + m_keyRepeatRate;
+            if (m_gameBoard.IsValidPosition(m_activeShape))
+            {
+                Debug.Log("Move right");
+            }
+            else
+            {
+                m_activeShape.MoveLeft();
+                Debug.Log("Hit the right boundary");
             }
         }
     }
