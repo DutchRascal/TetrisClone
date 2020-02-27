@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Board : MonoBehaviour
 {
@@ -55,11 +52,25 @@ public class Board : MonoBehaviour
         foreach (Transform child in shape.transform)
         {
             Vector2 pos = Vectorf.Round(child.position);
-            if (!IsWithinBoard((int)pos.x, (int)pos.y))
-            {
-                return false;
-            }
+            if (!IsWithinBoard((int)pos.x, (int)pos.y)) { return false; }
+            if (IsOccupied((int)pos.x, (int)pos.y, shape)) { return false; }
         }
         return true;
+    }
+
+    public void StoreShapeInGrid(Shape shape)
+    {
+        if (shape == null) { return; }
+
+        foreach (Transform child in shape.transform)
+        {
+            Vector2 pos = Vectorf.Round(child.position);
+            m_grid[(int)pos.x, (int)pos.y] = child;
+        }
+    }
+
+    bool IsOccupied(int x, int y, Shape shape)
+    {
+        return (m_grid[x, y] != null && m_grid[x, y].parent != shape.transform);
     }
 }
