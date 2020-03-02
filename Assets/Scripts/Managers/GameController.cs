@@ -8,10 +8,9 @@ public class GameController : MonoBehaviour
     Board m_gameBoard;
     Spawner m_spawner;
     Shape m_activeShape;
-    float
-        m_dropInterval = 0.9f,
-        //m_dropInterval = 1f,
-        m_timeToDrop;
+    public float m_dropInterval = 0.9f;
+    //m_dropInterval = 1f,
+    float m_timeToDrop;
 
     [Range(0.02f, 1f)]
     public float m_keyRepeatRateLeftRight = 0.15f;
@@ -101,13 +100,13 @@ public class GameController : MonoBehaviour
 
     private void LandShape()
     {
-        m_timeToNextKeyLeftRight = Time.time;
-        m_timeToNextKeyDown = Time.time;
-        m_timeToNextKeyRotate = Time.time;
-
         m_activeShape.MoveUp();
         m_gameBoard.StoreShapeInGrid(m_activeShape);
         m_activeShape = m_spawner.SpawnShape();
+        m_timeToNextKeyLeftRight = Time.time;
+        m_timeToNextKeyDown = Time.time;
+        m_timeToNextKeyRotate = Time.time;
+        m_gameBoard.ClearAllRows();
     }
 
 }

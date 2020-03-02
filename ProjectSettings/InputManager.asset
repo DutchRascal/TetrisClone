@@ -44,7 +44,7 @@ InputManager:
     negativeButton: 
     positiveButton: down
     altNegativeButton: 
-    altPositiveButton: left
+    altPositiveButton: 
     gravity: 0
     dead: 0
     sensitivity: 0
