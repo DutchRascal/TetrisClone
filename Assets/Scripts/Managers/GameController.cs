@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class GameController : MonoBehaviour
     [Range(0.02f, 1f)]
     public float m_keyRepeatRateRotate = 0.25f;
     float m_timeToNextKeyRotate;
+    private bool m_GameOver = false;
+    public GameObject m_gameOverPanel;
 
     void Start()
     {
@@ -33,6 +36,10 @@ public class GameController : MonoBehaviour
         m_timeToNextKeyDown = Time.time + m_keyRepeatRateDown;
         m_timeToNextKeyRotate = Time.time + m_keyRepeatRateRotate;
 
+        if (m_gameOverPanel)
+        {
+            m_gameOverPanel.SetActive(false);
+        }
         if (!m_gameBoard)
         {
             Debug.LogWarning("GAMECONTROLLER START: There is no game board defined!");
@@ -53,7 +60,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (!m_gameBoard || !m_spawner || !m_activeShape) { return; }
+        if (!m_gameBoard || !m_spawner || !m_activeShape || m_GameOver) { return; }
         PlayerInput();
     }
 
@@ -93,9 +100,27 @@ public class GameController : MonoBehaviour
             m_activeShape.MoveDown();
             if (!m_gameBoard.IsValidPosition(m_activeShape))
             {
-                LandShape();
+                if (m_gameBoard.IsOverLimit(m_activeShape))
+                {
+                    GameOver();
+                }
+                else
+                {
+                    LandShape();
+                }
             }
         }
+    }
+
+    private void GameOver()
+    {
+        m_activeShape.MoveUp();
+        m_GameOver = true;
+        if (m_gameOverPanel)
+        {
+            m_gameOverPanel.SetActive(true);
+        }
+        Debug.LogWarning(m_activeShape.name + " is over the limit");
     }
 
     private void LandShape()
@@ -107,6 +132,12 @@ public class GameController : MonoBehaviour
         m_timeToNextKeyDown = Time.time;
         m_timeToNextKeyRotate = Time.time;
         m_gameBoard.ClearAllRows();
+    }
+
+    public void Restart()
+    {
+        Debug.Log("Restarted");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }
