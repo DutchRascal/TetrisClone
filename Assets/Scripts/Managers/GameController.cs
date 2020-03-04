@@ -120,7 +120,6 @@ public class GameController : MonoBehaviour
         {
             m_gameOverPanel.SetActive(true);
         }
-        Debug.LogWarning(m_activeShape.name + " is over the limit");
     }
 
     private void LandShape()
