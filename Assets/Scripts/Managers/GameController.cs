@@ -26,11 +26,13 @@ public class GameController : MonoBehaviour
     float m_timeToNextKeyRotate;
     private bool m_GameOver = false;
     public GameObject m_gameOverPanel;
+    SoundManager m_soundManager;
 
     void Start()
     {
         m_gameBoard = GameObject.FindObjectOfType<Board>();
         m_spawner = GameObject.FindObjectOfType<Spawner>();
+        m_soundManager = GameObject.FindObjectOfType<SoundManager>();
 
         m_timeToNextKeyLeftRight = Time.time + m_keyRepeatRateLeftRight;
         m_timeToNextKeyDown = Time.time + m_keyRepeatRateDown;
@@ -44,6 +46,10 @@ public class GameController : MonoBehaviour
         {
             Debug.LogWarning("GAMECONTROLLER START: There is no game board defined!");
         }
+        if (!m_soundManager)
+        {
+            Debug.LogWarning("GAMECONTROLLER START: There is no sound manager defined!");
+        }
         if (!m_spawner)
         {
             Debug.LogWarning("GAMECONTROLLER START: There is no spawner defined!");
@@ -56,11 +62,15 @@ public class GameController : MonoBehaviour
             }
             m_spawner.transform.position = Vectorf.Round(m_spawner.transform.position);
         }
+        //if (m_soundManager.m_fxEnabled && m_soundManager.m_moveSound)
+        //{
+        //    AudioSource.PlayClipAtPoint(m_soundManager.m_moveSound, Camera.main.transform.position, m_soundManager.m_fxVolume);
+        //}
     }
 
     void Update()
     {
-        if (!m_gameBoard || !m_spawner || !m_activeShape || m_GameOver) { return; }
+        if (!m_gameBoard || !m_spawner || !m_activeShape || m_GameOver || !m_soundManager) { return; }
         PlayerInput();
     }
 
@@ -131,6 +141,10 @@ public class GameController : MonoBehaviour
         m_timeToNextKeyDown = Time.time;
         m_timeToNextKeyRotate = Time.time;
         m_gameBoard.ClearAllRows();
+        if (m_soundManager.m_fxEnabled && m_soundManager.m_dropSound)
+        {
+            AudioSource.PlayClipAtPoint(m_soundManager.m_dropSound, Camera.main.transform.position, m_soundManager.m_musicVolume);
+        }
     }
 
     public void Restart()

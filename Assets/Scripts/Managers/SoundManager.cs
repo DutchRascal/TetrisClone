@@ -31,10 +31,12 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBackgroundMusic(AudioClip musicClip)
     {
-        if (!m_musicEnabled || !musicClip || !m_musicSource) { return; }
+        if (!m_musicEnabled || !musicClip || !m_musicSource) { Debug.Log("Skup"); return; }
         m_musicSource.Stop();
         m_musicSource.clip = musicClip;
+        print(m_musicSource.volume + " " + m_musicVolume);
         m_musicSource.volume = m_musicVolume;
+        print(m_musicSource.volume + " " + m_musicVolume);
         m_musicSource.loop = true;
         m_musicSource.Play();
     }
@@ -63,5 +65,10 @@ public class SoundManager : MonoBehaviour
     public AudioClip GetRandomClip(AudioClip[] clips)
     {
         return clips[Random.Range(0, clips.Length)];
+    }
+
+    public void ToggleFX()
+    {
+        m_fxEnabled = !m_fxEnabled;
     }
 }
