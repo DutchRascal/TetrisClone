@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
     private bool m_GameOver = false;
     public GameObject m_gameOverPanel;
     SoundManager m_soundManager;
+    public IconToggle m_rotIconToggle;
+    bool m_clockwise = true;
 
     void Start()
     {
@@ -106,7 +108,8 @@ public class GameController : MonoBehaviour
         }
         else if (Input.GetButtonDown("Rotate") && (Time.time > m_timeToNextKeyRotate))
         {
-            m_activeShape.RotateRight();
+            //m_activeShape.RotateRight();
+            m_activeShape.RotataClockWise(m_clockwise);
             m_timeToNextKeyRotate = Time.time + m_keyRepeatRateRotate;
             if (!m_gameBoard.IsValidPosition(m_activeShape))
             {
@@ -134,6 +137,10 @@ public class GameController : MonoBehaviour
                     LandShape();
                 }
             }
+        }
+        else if (Input.GetButtonDown("ToggleRot"))
+        {
+            ToggleRotDirection();
         }
     }
 
@@ -181,6 +188,15 @@ public class GameController : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ToggleRotDirection()
+    {
+        m_clockwise = !m_clockwise;
+        if (m_rotIconToggle)
+        {
+            m_rotIconToggle.ToggleIcon(m_clockwise);
+        }
     }
 
 }

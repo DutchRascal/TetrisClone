@@ -382,6 +382,7 @@ MonoBehaviour:
   m_keyRepeatRateDown: 0.02
   m_keyRepeatRateRotate: 0.2
   m_gameOverPanel: {fileID: 1599092708}
+  m_rotIconToggle: {fileID: 412541244082261013}
 --- !u!4 &194114771
 Transform:
   m_ObjectHideFlags: 0
@@ -801,7 +802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &709801697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1795,7 +1796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1503982451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2801,6 +2802,7 @@ GameObject:
   - component: {fileID: 5792359665687474807}
   - component: {fileID: 5983556738992570654}
   - component: {fileID: 192248850007896198}
+  - component: {fileID: 412541244082261013}
   m_Layer: 5
   m_Name: RotateIcon
   m_TagString: Untagged
@@ -2808,6 +2810,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &412541244082261013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412541244082261012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3144810d9a6884a3c92dac6812017208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iconTrue: {fileID: 21300000, guid: 1e806e07204a5407ebc13af78d34a5a5, type: 3}
+  m_iconFalse: {fileID: 21300000, guid: 513163fc8793b44c3a5ba259e99663ac, type: 3}
+  m_defaultIconState: 1
 --- !u!114 &909016651356605300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3894,7 +3911,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 192248849315515130}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -3936,6 +3953,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5735283320147178718}
   - component: {fileID: 909016652444034564}
+  - component: {fileID: 8571843028899975793}
   m_Layer: 5
   m_Name: Rotate
   m_TagString: Untagged
@@ -3943,6 +3961,60 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8571843028899975793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8571843028899975792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 192248850007896198}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 194114770}
+        m_MethodName: ToggleRotDirection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8571843029179637345
 GameObject:
   m_ObjectHideFlags: 0
@@ -4017,7 +4089,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 192248848945733110}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
