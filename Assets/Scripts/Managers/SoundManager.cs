@@ -15,10 +15,10 @@ public class SoundManager : MonoBehaviour
         m_moveSound,
         m_dropSound,
         m_gameOverSound,
-        m_backgroundMusic;
+        m_backgroundMusic,
+        m_errorSound;
     public AudioSource m_musicSource;
     public AudioClip[] m_musicClips;
-
 
     private void Start()
     {
@@ -31,12 +31,10 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBackgroundMusic(AudioClip musicClip)
     {
-        if (!m_musicEnabled || !musicClip || !m_musicSource) { Debug.Log("Skup"); return; }
+        if (!m_musicEnabled || !musicClip || !m_musicSource) { return; }
         m_musicSource.Stop();
         m_musicSource.clip = musicClip;
-        print(m_musicSource.volume + " " + m_musicVolume);
         m_musicSource.volume = m_musicVolume;
-        print(m_musicSource.volume + " " + m_musicVolume);
         m_musicSource.loop = true;
         m_musicSource.Play();
     }

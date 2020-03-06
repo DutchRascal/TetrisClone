@@ -83,6 +83,11 @@ public class GameController : MonoBehaviour
             if (!m_gameBoard.IsValidPosition(m_activeShape))
             {
                 m_activeShape.MoveLeft();
+                PlaySound(m_soundManager.m_errorSound, 1f);
+            }
+            else
+            {
+                PlaySound(m_soundManager.m_moveSound, 1f);
             }
         }
         else if (Input.GetButton("MoveLeft") && (Time.time > m_timeToNextKeyLeftRight) || Input.GetButtonDown("MoveLeft"))
@@ -92,6 +97,11 @@ public class GameController : MonoBehaviour
             if (!m_gameBoard.IsValidPosition(m_activeShape))
             {
                 m_activeShape.MoveRight();
+                PlaySound(m_soundManager.m_errorSound);
+            }
+            else
+            {
+                PlaySound(m_soundManager.m_moveSound);
             }
         }
         else if (Input.GetButtonDown("Rotate") && (Time.time > m_timeToNextKeyRotate))
@@ -101,6 +111,11 @@ public class GameController : MonoBehaviour
             if (!m_gameBoard.IsValidPosition(m_activeShape))
             {
                 m_activeShape.RotateLeft();
+                PlaySound(m_soundManager.m_errorSound);
+            }
+            else
+            {
+                PlaySound(m_soundManager.m_moveSound);
             }
         }
         else if (Input.GetButton("MoveDown") && (Time.time > m_timeToNextKeyDown) || (Time.time > m_timeToDrop))
@@ -122,6 +137,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void PlaySound(AudioClip clip, float volMultipler = 1.0f)
+    {
+        if (clip && m_soundManager.m_fxEnabled)
+        {
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, Mathf.Clamp(m_soundManager.m_fxVolume * volMultipler, 0.05f, 1f));
+        }
+    }
+
     private void GameOver()
     {
         m_activeShape.MoveUp();
@@ -130,6 +153,7 @@ public class GameController : MonoBehaviour
         {
             m_gameOverPanel.SetActive(true);
         }
+        PlaySound(m_soundManager.m_gameOverSound, 5f);
     }
 
     private void LandShape()
