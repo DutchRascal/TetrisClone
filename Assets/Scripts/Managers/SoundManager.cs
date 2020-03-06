@@ -19,6 +19,8 @@ public class SoundManager : MonoBehaviour
         m_errorSound;
     public AudioSource m_musicSource;
     public AudioClip[] m_musicClips;
+    public AudioClip[] m_vocalClips;
+    public AudioClip m_gameOverVocalClip;
 
     private void Start()
     {
