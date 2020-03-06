@@ -7,6 +7,7 @@ public class Board : MonoBehaviour
     public int m_height = 10;
     public int m_width = 10;
     public int m_header = 8;
+    public int m_completedRows = 0;
 
     Transform[,] m_grid;
 
@@ -121,10 +122,12 @@ public class Board : MonoBehaviour
 
     public void ClearAllRows()
     {
+        m_completedRows = 0;
         for (int y = 0; y < m_height; ++y)
         {
             if (isComplete(y))
             {
+                m_completedRows++;
                 ClearRow(y);
                 ShiftRowsDown(y);
                 y--;

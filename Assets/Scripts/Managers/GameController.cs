@@ -165,9 +165,10 @@ public class GameController : MonoBehaviour
         m_timeToNextKeyDown = Time.time;
         m_timeToNextKeyRotate = Time.time;
         m_gameBoard.ClearAllRows();
-        if (m_soundManager.m_fxEnabled && m_soundManager.m_dropSound)
+        PlaySound(m_soundManager.m_dropSound);
+        if (m_gameBoard.m_completedRows > 0)
         {
-            AudioSource.PlayClipAtPoint(m_soundManager.m_dropSound, Camera.main.transform.position, m_soundManager.m_musicVolume);
+            PlaySound(m_soundManager.m_clearRowSound);
         }
     }
 
