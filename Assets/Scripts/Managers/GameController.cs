@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
     SoundManager m_soundManager;
     public IconToggle m_rotIconToggle;
     bool m_clockwise = true;
+    public bool m_isPaused = false;
+    public GameObject m_pausePanel;
 
     void Start()
     {
@@ -40,18 +42,10 @@ public class GameController : MonoBehaviour
         m_timeToNextKeyDown = Time.time + m_keyRepeatRateDown;
         m_timeToNextKeyRotate = Time.time + m_keyRepeatRateRotate;
 
-        if (m_gameOverPanel)
-        {
-            m_gameOverPanel.SetActive(false);
-        }
-        if (!m_gameBoard)
-        {
-            Debug.LogWarning("GAMECONTROLLER START: There is no game board defined!");
-        }
-        if (!m_soundManager)
-        {
-            Debug.LogWarning("GAMECONTROLLER START: There is no sound manager defined!");
-        }
+        if (m_gameOverPanel) { m_gameOverPanel.SetActive(false); }
+        if (m_pausePanel) { m_pausePanel.SetActive(false); }
+        if (!m_gameBoard) { Debug.LogWarning("GAMECONTROLLER START: There is no game board defined!"); }
+        if (!m_soundManager) { Debug.LogWarning("GAMECONTROLLER START: There is no sound manager defined!"); }
         if (!m_spawner)
         {
             Debug.LogWarning("GAMECONTROLLER START: There is no spawner defined!");
@@ -64,10 +58,6 @@ public class GameController : MonoBehaviour
             }
             m_spawner.transform.position = Vectorf.Round(m_spawner.transform.position);
         }
-        //if (m_soundManager.m_fxEnabled && m_soundManager.m_moveSound)
-        //{
-        //    AudioSource.PlayClipAtPoint(m_soundManager.m_moveSound, Camera.main.transform.position, m_soundManager.m_fxVolume);
-        //}
     }
 
     void Update()
@@ -142,6 +132,10 @@ public class GameController : MonoBehaviour
         {
             ToggleRotDirection();
         }
+        else if (Input.GetButtonDown("Pause"))
+        {
+            TogglePause();
+        }
     }
 
     void PlaySound(AudioClip clip, float volMultipler = 1.0f)
@@ -187,6 +181,7 @@ public class GameController : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -199,4 +194,18 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void TogglePause()
+    {
+        if (m_GameOver) { return; }
+        m_isPaused = !m_isPaused;
+        if (m_pausePanel)
+        {
+            m_pausePanel.SetActive(m_isPaused);
+        }
+        if (m_soundManager)
+        {
+            m_soundManager.m_musicSource.volume = (m_isPaused) ? m_soundManager.m_musicVolume * 0.25f : m_soundManager.m_musicVolume;
+        }
+        Time.timeScale = (m_isPaused) ? 0 : 1;
+    }
 }
