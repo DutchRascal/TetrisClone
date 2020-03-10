@@ -41,6 +41,11 @@ public class ScoreManager : MonoBehaviour
                 m_score += 1200 * m_level;
                 break;
         }
+        m_lines -= n;
+        if (m_lines <= 0)
+        {
+            LevelUp();
+        }
         UpdateUIText();
     }
 
@@ -48,6 +53,7 @@ public class ScoreManager : MonoBehaviour
     {
         m_level = 1;
         m_lines = m_linesPerLevel * m_level;
+        UpdateUIText();
     }
 
     void Start()
@@ -70,5 +76,11 @@ public class ScoreManager : MonoBehaviour
             nStr = "0" + nStr;
         }
         return nStr;
+    }
+
+    public void LevelUp()
+    {
+        m_level++;
+        m_lines = m_linesPerLevel * m_level;
     }
 }
