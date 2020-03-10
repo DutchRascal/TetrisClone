@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     Shape m_activeShape;
     SoundManager m_soundManager;
     ScoreManager m_scoreManager;
+    Ghost m_ghost;
 
     public float m_dropInterval = 0.9f;
     //m_dropInterval = 1f,
@@ -41,6 +42,7 @@ public class GameController : MonoBehaviour
         m_spawner = GameObject.FindObjectOfType<Spawner>();
         m_soundManager = GameObject.FindObjectOfType<SoundManager>();
         m_scoreManager = GameObject.FindObjectOfType<ScoreManager>();
+        m_ghost = GameObject.FindObjectOfType<Ghost>();
 
         m_timeToNextKeyLeftRight = Time.time + m_keyRepeatRateLeftRight;
         m_timeToNextKeyDown = Time.time + m_keyRepeatRateDown;
@@ -51,6 +53,7 @@ public class GameController : MonoBehaviour
         if (!m_gameBoard) { Debug.LogWarning("GAMECONTROLLER START: There is no game board defined!"); }
         if (!m_soundManager) { Debug.LogWarning("GAMECONTROLLER START: There is no sound manager defined!"); }
         if (!m_scoreManager) { Debug.LogWarning("GAMECONTROLLER START: There is no score manager defined!"); }
+        if (!m_ghost) { Debug.LogWarning("GAMECONTROLLER START: There is no ghost!"); }
         if (!m_spawner)
         {
             Debug.LogWarning("GAMECONTROLLER START: There is no spawner defined!");
@@ -69,6 +72,14 @@ public class GameController : MonoBehaviour
     {
         if (!m_gameBoard || !m_spawner || !m_activeShape || m_GameOver || !m_soundManager || !m_scoreManager) { return; }
         PlayerInput();
+    }
+
+    private void LateUpdate()
+    {
+        if (m_ghost)
+        {
+            m_ghost.DrawGhost(m_activeShape, m_gameBoard);
+        }
     }
 
     private void PlayerInput()
@@ -167,6 +178,10 @@ public class GameController : MonoBehaviour
     {
         m_activeShape.MoveUp();
         m_gameBoard.StoreShapeInGrid(m_activeShape);
+        if (m_ghost)
+        {
+            m_ghost.Reset();
+        }
         m_activeShape = m_spawner.SpawnShape();
         m_timeToNextKeyLeftRight = Time.time;
         m_timeToNextKeyDown = Time.time;
