@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour
     Board m_gameBoard;
     Spawner m_spawner;
     Shape m_activeShape;
+    SoundManager m_soundManager;
+    ScoreManager m_scoreManager;
+
     public float m_dropInterval = 0.9f;
     //m_dropInterval = 1f,
     float m_timeToDrop;
@@ -26,17 +29,18 @@ public class GameController : MonoBehaviour
     float m_timeToNextKeyRotate;
     private bool m_GameOver = false;
     public GameObject m_gameOverPanel;
-    SoundManager m_soundManager;
     public IconToggle m_rotIconToggle;
     bool m_clockwise = true;
     public bool m_isPaused = false;
     public GameObject m_pausePanel;
+
 
     void Start()
     {
         m_gameBoard = GameObject.FindObjectOfType<Board>();
         m_spawner = GameObject.FindObjectOfType<Spawner>();
         m_soundManager = GameObject.FindObjectOfType<SoundManager>();
+        m_scoreManager = GameObject.FindObjectOfType<ScoreManager>();
 
         m_timeToNextKeyLeftRight = Time.time + m_keyRepeatRateLeftRight;
         m_timeToNextKeyDown = Time.time + m_keyRepeatRateDown;
@@ -46,6 +50,7 @@ public class GameController : MonoBehaviour
         if (m_pausePanel) { m_pausePanel.SetActive(false); }
         if (!m_gameBoard) { Debug.LogWarning("GAMECONTROLLER START: There is no game board defined!"); }
         if (!m_soundManager) { Debug.LogWarning("GAMECONTROLLER START: There is no sound manager defined!"); }
+        if (!m_scoreManager) { Debug.LogWarning("GAMECONTROLLER START: There is no score manager defined!"); }
         if (!m_spawner)
         {
             Debug.LogWarning("GAMECONTROLLER START: There is no spawner defined!");
@@ -62,7 +67,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (!m_gameBoard || !m_spawner || !m_activeShape || m_GameOver || !m_soundManager) { return; }
+        if (!m_gameBoard || !m_spawner || !m_activeShape || m_GameOver || !m_soundManager || !m_scoreManager) { return; }
         PlayerInput();
     }
 
@@ -170,6 +175,7 @@ public class GameController : MonoBehaviour
         PlaySound(m_soundManager.m_dropSound);
         if (m_gameBoard.m_completedRows > 0)
         {
+            m_scoreManager.ScoreLines(m_gameBoard.m_completedRows);
             if (m_gameBoard.m_completedRows > 1)
             {
                 AudioClip randomVocal = m_soundManager.GetRandomClip(m_soundManager.m_vocalClips);

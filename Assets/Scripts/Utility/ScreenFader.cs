@@ -44,6 +44,5 @@ public class ScreenFader : MonoBehaviour
             Color tempColor = new Color(m_originalColor.r, m_originalColor.g, m_originalColor.b, m_currentAlpha);
             m_graphic.color = tempColor;
         }
-        Debug.Log("SCREENFADER finished");
     }
 }
