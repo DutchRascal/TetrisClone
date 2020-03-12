@@ -11,7 +11,8 @@ public class Ghost : MonoBehaviour
 
     public void DrawGhost(Shape originalShape, Board gameboard)
     {
-        if (!m_ghostShape)
+        if (!originalShape) { return; }
+        if (!m_ghostShape || !originalShape)
         {
             m_ghostShape = Instantiate(originalShape, originalShape.transform.position, originalShape.transform.rotation) as Shape;
             m_ghostShape.gameObject.name = "GhostShape";

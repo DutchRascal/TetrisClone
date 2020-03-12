@@ -6,16 +6,7 @@ public class Shape : MonoBehaviour
 {
 
     public bool m_canRotate = true;
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
+    public Vector3 m_queueOffset;
 
     public void Move(Vector3 moveDirection)
     {
