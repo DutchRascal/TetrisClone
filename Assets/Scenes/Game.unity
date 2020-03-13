@@ -2693,6 +2693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_holderXform: {fileID: 742126537}
   m_heldShape: {fileID: 0}
+  m_canRelease: 0
 --- !u!1 &1404064852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4195,6 +4196,7 @@ MonoBehaviour:
   m_gameOverSound: {fileID: 8300000, guid: fed0a0232ce1b40a882a18aa3a249a22, type: 3}
   m_backgroundMusic: {fileID: 8300000, guid: 8e6afcfcba29249349c399c7826ebf58, type: 3}
   m_errorSound: {fileID: 8300000, guid: 837dfc9d854464e42ac6063e526eacc1, type: 3}
+  m_holdSound: {fileID: 8300000, guid: 490eda4d030724e989ab9f5f85b98b9f, type: 3}
   m_musicSource: {fileID: 1059892707}
   m_musicClips:
   - {fileID: 8300000, guid: 8e6afcfcba29249349c399c7826ebf58, type: 3}
