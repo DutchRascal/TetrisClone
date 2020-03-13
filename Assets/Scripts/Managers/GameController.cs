@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     SoundManager m_soundManager;
     ScoreManager m_scoreManager;
     Ghost m_ghost;
+    Holder m_holder;
 
     public float m_dropInterval = 0.9f;
     //m_dropInterval = 1f,
@@ -43,6 +44,7 @@ public class GameController : MonoBehaviour
         m_soundManager = GameObject.FindObjectOfType<SoundManager>();
         m_scoreManager = GameObject.FindObjectOfType<ScoreManager>();
         m_ghost = GameObject.FindObjectOfType<Ghost>();
+        m_holder = GameObject.FindObjectOfType<Holder>();
 
         m_timeToNextKeyLeftRight = Time.time + m_keyRepeatRateLeftRight;
         m_timeToNextKeyDown = Time.time + m_keyRepeatRateDown;
@@ -54,6 +56,7 @@ public class GameController : MonoBehaviour
         if (!m_soundManager) { Debug.LogWarning("GAMECONTROLLER START: There is no sound manager defined!"); }
         if (!m_scoreManager) { Debug.LogWarning("GAMECONTROLLER START: There is no score manager defined!"); }
         if (!m_ghost) { Debug.LogWarning("GAMECONTROLLER START: There is no ghost!"); }
+        if (!m_holder) { Debug.LogWarning("GAMECONTROLLER START: There is no holder!"); }
         if (!m_spawner)
         {
             Debug.LogWarning("GAMECONTROLLER START: There is no spawner defined!");
@@ -228,5 +231,18 @@ public class GameController : MonoBehaviour
             m_soundManager.m_musicSource.volume = (m_isPaused) ? m_soundManager.m_musicVolume * 0.25f : m_soundManager.m_musicVolume;
         }
         Time.timeScale = (m_isPaused) ? 0 : 1;
+    }
+
+    public void Hold()
+    {
+        if (!m_holder.m_heldShape)
+        {
+            m_holder.Catch(m_activeShape);
+            m_activeShape = m_spawner.SpawnShape();
+        }
+        if (m_ghost)
+        {
+            m_ghost.Reset();
+        }
     }
 }
