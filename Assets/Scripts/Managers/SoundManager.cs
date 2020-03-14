@@ -17,7 +17,8 @@ public class SoundManager : MonoBehaviour
         m_gameOverSound,
         m_backgroundMusic,
         m_errorSound,
-        m_holdSound;
+        m_holdSound,
+        m_levelUpSound;
     public AudioSource m_musicSource;
     public AudioClip[] m_musicClips;
     public AudioClip[] m_vocalClips;

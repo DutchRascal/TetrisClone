@@ -11,6 +11,8 @@ public class ScoreManager : MonoBehaviour
         m_lines,
         m_level = 1;
 
+    public bool m_levelUp = false;
+
     public int m_linesPerLevel = 5;
 
     public Text
@@ -82,5 +84,6 @@ public class ScoreManager : MonoBehaviour
     {
         m_level++;
         m_lines = m_linesPerLevel * m_level;
+        m_levelUp = true;
     }
 }

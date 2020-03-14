@@ -208,6 +208,11 @@ public class GameController : MonoBehaviour
                 PlaySound(randomVocal);
             }
             PlaySound(m_soundManager.m_clearRowSound);
+            if (m_scoreManager.m_levelUp)
+            {
+                PlaySound(m_soundManager.m_levelUpSound);
+                m_scoreManager.m_levelUp = false;
+            }
         }
     }
 
