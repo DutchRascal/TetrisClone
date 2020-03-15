@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +15,6 @@ public class ScreenFader : MonoBehaviour
     MaskableGraphic m_graphic;
     Color m_originalColor;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_graphic = GetComponent<MaskableGraphic>();
@@ -26,12 +24,6 @@ public class ScreenFader : MonoBehaviour
         m_graphic.color = tempColor;
         m_inc = (m_targetAlpha - m_startAlpha) / m_timeToFade * Time.deltaTime;
         StartCoroutine("FadeRoutine");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     IEnumerator FadeRoutine()

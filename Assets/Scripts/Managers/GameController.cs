@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
@@ -39,24 +36,10 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        m_gameBoard = GameObject.FindObjectOfType<Board>();
-        m_spawner = GameObject.FindObjectOfType<Spawner>();
-        m_soundManager = GameObject.FindObjectOfType<SoundManager>();
-        m_scoreManager = GameObject.FindObjectOfType<ScoreManager>();
-        m_ghost = GameObject.FindObjectOfType<Ghost>();
-        m_holder = GameObject.FindObjectOfType<Holder>();
+        InitializeObjects();
+        InitializeVariables();
+        ErrorHandling();
 
-        m_timeToNextKeyLeftRight = Time.time + m_keyRepeatRateLeftRight;
-        m_timeToNextKeyDown = Time.time + m_keyRepeatRateDown;
-        m_timeToNextKeyRotate = Time.time + m_keyRepeatRateRotate;
-
-        if (m_gameOverPanel) { m_gameOverPanel.SetActive(false); }
-        if (m_pausePanel) { m_pausePanel.SetActive(false); }
-        if (!m_gameBoard) { Debug.LogWarning("GAMECONTROLLER START: There is no game board defined!"); }
-        if (!m_soundManager) { Debug.LogWarning("GAMECONTROLLER START: There is no sound manager defined!"); }
-        if (!m_scoreManager) { Debug.LogWarning("GAMECONTROLLER START: There is no score manager defined!"); }
-        if (!m_ghost) { Debug.LogWarning("GAMECONTROLLER START: There is no ghost!"); }
-        if (!m_holder) { Debug.LogWarning("GAMECONTROLLER START: There is no holder!"); }
         if (!m_spawner)
         {
             Debug.LogWarning("GAMECONTROLLER START: There is no spawner defined!");
@@ -83,6 +66,34 @@ public class GameController : MonoBehaviour
         {
             m_ghost.DrawGhost(m_activeShape, m_gameBoard);
         }
+    }
+
+    private void InitializeVariables()
+    {
+        m_timeToNextKeyLeftRight = Time.time + m_keyRepeatRateLeftRight;
+        m_timeToNextKeyDown = Time.time + m_keyRepeatRateDown;
+        m_timeToNextKeyRotate = Time.time + m_keyRepeatRateRotate;
+    }
+
+    private void ErrorHandling()
+    {
+        if (m_gameOverPanel) { m_gameOverPanel.SetActive(false); }
+        if (m_pausePanel) { m_pausePanel.SetActive(false); }
+        if (!m_gameBoard) { Debug.LogWarning("GAMECONTROLLER START: There is no game board defined!"); }
+        if (!m_soundManager) { Debug.LogWarning("GAMECONTROLLER START: There is no sound manager defined!"); }
+        if (!m_scoreManager) { Debug.LogWarning("GAMECONTROLLER START: There is no score manager defined!"); }
+        if (!m_ghost) { Debug.LogWarning("GAMECONTROLLER START: There is no ghost!"); }
+        if (!m_holder) { Debug.LogWarning("GAMECONTROLLER START: There is no holder!"); }
+    }
+
+    private void InitializeObjects()
+    {
+        m_gameBoard = GameObject.FindObjectOfType<Board>();
+        m_spawner = GameObject.FindObjectOfType<Spawner>();
+        m_soundManager = GameObject.FindObjectOfType<SoundManager>();
+        m_scoreManager = GameObject.FindObjectOfType<ScoreManager>();
+        m_ghost = GameObject.FindObjectOfType<Ghost>();
+        m_holder = GameObject.FindObjectOfType<Holder>();
     }
 
     private void PlayerInput()
@@ -202,16 +213,19 @@ public class GameController : MonoBehaviour
         if (m_gameBoard.m_completedRows > 0)
         {
             m_scoreManager.ScoreLines(m_gameBoard.m_completedRows);
-            if (m_gameBoard.m_completedRows > 1)
+            if (m_gameBoard.m_completedRows > 1 && !m_scoreManager.m_levelUp)
             {
                 AudioClip randomVocal = m_soundManager.GetRandomClip(m_soundManager.m_vocalClips);
                 PlaySound(randomVocal);
             }
-            PlaySound(m_soundManager.m_clearRowSound);
             if (m_scoreManager.m_levelUp)
             {
                 PlaySound(m_soundManager.m_levelUpSound);
                 m_scoreManager.m_levelUp = false;
+            }
+            else
+            {
+                PlaySound(m_soundManager.m_clearRowSound);
             }
         }
     }
