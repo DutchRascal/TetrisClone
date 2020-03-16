@@ -8,6 +8,7 @@ public class Board : MonoBehaviour
     public int m_width = 10;
     public int m_header = 8;
     public int m_completedRows = 0;
+    public ParticlePlayer m_rowGlowFX;
 
     Transform[,] m_grid;
 
@@ -129,6 +130,7 @@ public class Board : MonoBehaviour
             {
                 m_completedRows++;
                 ClearRow(y);
+                ClearRowFX(y);
                 ShiftRowsDown(y);
                 y--;
             }
@@ -145,5 +147,14 @@ public class Board : MonoBehaviour
             }
         }
         return false;
+    }
+
+    void ClearRowFX(int y)
+    {
+        if (m_rowGlowFX)
+        {
+            m_rowGlowFX.transform.position = new Vector3(0, y, -2f);
+            m_rowGlowFX.Play();
+        }
     }
 }
