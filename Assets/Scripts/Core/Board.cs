@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Board : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Board : MonoBehaviour
     public int m_width = 10;
     public int m_header = 8;
     public int m_completedRows = 0;
-    public ParticlePlayer m_rowGlowFX;
+    public ParticlePlayer[] m_rowGlowFX = new ParticlePlayer[4];
 
     Transform[,] m_grid;
 
@@ -121,17 +122,25 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void ClearAllRows()
+    public IEnumerator ClearAllRows()
     {
         m_completedRows = 0;
         for (int y = 0; y < m_height; ++y)
         {
             if (isComplete(y))
             {
+                ClearRowFX(m_completedRows, y);
                 m_completedRows++;
+            }
+        }
+        yield return new WaitForSeconds(0.5f);
+        for (int y = 0; y < m_height; ++y)
+        {
+            if (isComplete(y))
+            {
                 ClearRow(y);
-                ClearRowFX(y);
                 ShiftRowsDown(y);
+                yield return new WaitForSeconds(0.3f);
                 y--;
             }
         }
@@ -149,12 +158,12 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    void ClearRowFX(int y)
+    void ClearRowFX(int idx, int y)
     {
-        if (m_rowGlowFX)
+        if (m_rowGlowFX[idx])
         {
-            m_rowGlowFX.transform.position = new Vector3(0, y, -2f);
-            m_rowGlowFX.Play();
+            m_rowGlowFX[idx].transform.position = new Vector3(0, y, -2f);
+            m_rowGlowFX[idx].Play();
         }
     }
 }

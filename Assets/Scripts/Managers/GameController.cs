@@ -208,7 +208,7 @@ public class GameController : MonoBehaviour
         m_timeToNextKeyLeftRight = Time.time;
         m_timeToNextKeyDown = Time.time;
         m_timeToNextKeyRotate = Time.time;
-        m_gameBoard.ClearAllRows();
+        m_gameBoard.StartCoroutine("ClearAllRows");
         PlaySound(m_soundManager.m_dropSound);
         if (m_gameBoard.m_completedRows > 0)
         {
