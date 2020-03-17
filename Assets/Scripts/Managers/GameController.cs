@@ -194,38 +194,42 @@ public class GameController : MonoBehaviour
 
     private void LandShape()
     {
-        m_activeShape.MoveUp();
-        m_gameBoard.StoreShapeInGrid(m_activeShape);
-        if (m_ghost)
+        if (m_activeShape)
         {
-            m_ghost.Reset();
-        }
-        if (m_holder)
-        {
-            m_holder.m_canRelease = true;
-        }
-        m_activeShape = m_spawner.SpawnShape();
-        m_timeToNextKeyLeftRight = Time.time;
-        m_timeToNextKeyDown = Time.time;
-        m_timeToNextKeyRotate = Time.time;
-        m_gameBoard.StartCoroutine("ClearAllRows");
-        PlaySound(m_soundManager.m_dropSound);
-        if (m_gameBoard.m_completedRows > 0)
-        {
-            m_scoreManager.ScoreLines(m_gameBoard.m_completedRows);
-            if (m_gameBoard.m_completedRows > 1 && !m_scoreManager.m_levelUp)
+            m_activeShape.MoveUp();
+            m_gameBoard.StoreShapeInGrid(m_activeShape);
+            m_activeShape.LandShapeFX();
+            if (m_ghost)
             {
-                AudioClip randomVocal = m_soundManager.GetRandomClip(m_soundManager.m_vocalClips);
-                PlaySound(randomVocal);
+                m_ghost.Reset();
             }
-            if (m_scoreManager.m_levelUp)
+            if (m_holder)
             {
-                PlaySound(m_soundManager.m_levelUpSound);
-                m_scoreManager.m_levelUp = false;
+                m_holder.m_canRelease = true;
             }
-            else
+            m_activeShape = m_spawner.SpawnShape();
+            m_timeToNextKeyLeftRight = Time.time;
+            m_timeToNextKeyDown = Time.time;
+            m_timeToNextKeyRotate = Time.time;
+            m_gameBoard.StartCoroutine("ClearAllRows");
+            PlaySound(m_soundManager.m_dropSound);
+            if (m_gameBoard.m_completedRows > 0)
             {
-                PlaySound(m_soundManager.m_clearRowSound);
+                m_scoreManager.ScoreLines(m_gameBoard.m_completedRows);
+                if (m_gameBoard.m_completedRows > 1 && !m_scoreManager.m_levelUp)
+                {
+                    AudioClip randomVocal = m_soundManager.GetRandomClip(m_soundManager.m_vocalClips);
+                    PlaySound(randomVocal);
+                }
+                if (m_scoreManager.m_levelUp)
+                {
+                    PlaySound(m_soundManager.m_levelUpSound);
+                    m_scoreManager.m_levelUp = false;
+                }
+                else
+                {
+                    PlaySound(m_soundManager.m_clearRowSound);
+                }
             }
         }
     }
