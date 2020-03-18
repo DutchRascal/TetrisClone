@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
@@ -32,7 +33,7 @@ public class GameController : MonoBehaviour
     bool m_clockwise = true;
     public bool m_isPaused = false;
     public GameObject m_pausePanel;
-
+    public ParticlePlayer m_gameOverFx;
 
     void Start()
     {
@@ -184,10 +185,7 @@ public class GameController : MonoBehaviour
     {
         m_activeShape.MoveUp();
         m_GameOver = true;
-        if (m_gameOverPanel)
-        {
-            m_gameOverPanel.SetActive(true);
-        }
+        StartCoroutine(GameOverRoutine());
         PlaySound(m_soundManager.m_gameOverSound, 5f);
         PlaySound(m_soundManager.m_gameOverVocalClip);
     }
@@ -288,6 +286,19 @@ public class GameController : MonoBehaviour
         if (m_ghost)
         {
             m_ghost.Reset();
+        }
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        if (m_gameOverFx)
+        {
+            m_gameOverFx.Play();
+        }
+        yield return new WaitForSeconds(0.3f);
+        if (m_gameOverPanel)
+        {
+            m_gameOverPanel.SetActive(true);
         }
     }
 }
